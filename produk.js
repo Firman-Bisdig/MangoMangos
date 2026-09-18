@@ -43,9 +43,9 @@ const PRODUK = {
     price: 30000,
     oldPrice: 39000,
     tag: 'Promo Spesial',
-    img: 'Gambar/Bundle 1.jpeg',
+    img: 'Gambar/Bundle-1.jpeg',
       gallery: [
-    'Gambar/Bundle 1.jpeg',
+    'Gambar/Bundle-1.jpeg',
     'Gambar/Avocado.jpeg',
     'Gambar/Avocado.jpeg',
     'Gambar/Mangga.jpeg'
@@ -61,9 +61,9 @@ const PRODUK = {
     price: 30000,
     oldPrice: 39000,
     tag: 'Promo Spesial',
-    img: 'Gambar/Bundle 2.jpeg',
+    img: 'Gambar/Bundle-2.jpeg',
     gallery: [
-    'Gambar/Bundle 2.jpeg',
+    'Gambar/Bundle-2.jpeg',
     'Gambar/Salad.jpeg',
     'Gambar/Salad.jpeg',
     'Gambar/Mangga.jpeg'
@@ -79,9 +79,9 @@ const PRODUK = {
     price: 30000,
     oldPrice: 39000,
     tag: 'Promo Spesial',
-    img: 'Gambar/Bundle 3.jpeg',
+    img: 'Gambar/Bundle-3.jpeg',
     gallery: [
-    'Gambar/Bundle 3.jpeg',
+    'Gambar/Bundle-3.jpeg',
     'Gambar/Salad.jpeg',
     'Gambar/Avocado.jpeg',
     'Gambar/Mangga.jpeg'
