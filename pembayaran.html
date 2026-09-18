@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mango Mango's — Pembayaran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-ink:#20300f; --green-deep:#2c4118; --green-mid:#41611f;
+    --green-soft:#e7eedb; --yellow:#f6c933; --yellow-deep:#f0a63a;
+    --cream:#fffaea; --white:#ffffff;
+    --line: rgba(32,48,15,0.12);
+    --shadow: 0 18px 40px -20px rgba(32,48,15,0.35);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--green-ink); font-family:'Public Sans', sans-serif; line-height:1.5;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; margin:0;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ============ NAV ============ */
+  header{position:sticky; top:0; z-index:50; background:var(--green-deep); padding:14px 20px;}
+  nav.wrap{display:flex; align-items:center; justify-content:space-between; max-width:1180px; gap:20px;}
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand .brand-mark{width:42px; height:42px; object-fit:contain; display:block;}
+  .brand span{font-family:'Fraunces', serif; font-weight:700; font-size:1.28rem; font-style:italic; color:var(--cream);}
+  .navlinks{display:flex; gap:6px; font-weight:600; font-size:0.9rem; background:rgba(255,250,234,0.08); border:1px solid rgba(255,250,234,0.16); padding:6px; border-radius:999px;}
+  .navlinks a{position:relative; padding:9px 20px; color:#cddabf; border-radius:999px;}
+  .nav-cta{display:flex; align-items:center; gap:14px;}
+  .cart-btn{position:relative; width:40px; height:40px; border-radius:50%; background:rgba(255,250,234,0.1); border:1px solid rgba(255,250,234,0.2); display:flex; align-items:center; justify-content:center;}
+  .cart-btn svg{width:18px; height:18px; stroke:var(--cream);}
+  .cart-badge{position:absolute; top:-4px; right:-4px; background:var(--yellow); color:var(--green-ink); font-size:11px; font-weight:800; width:19px; height:19px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid var(--green-deep);}
+  .profile-btn{width:40px; height:40px; border-radius:50%; background:rgba(255,250,234,0.1); border:1px solid rgba(255,250,234,0.2); display:flex; align-items:center; justify-content:center; color:var(--cream);}
+
+  .breadcrumb{padding:26px 0 6px; font-size:0.85rem; color:#6a7660;}
+  .breadcrumb a{color:var(--green-mid); font-weight:600;}
+  .breadcrumb .sep{margin:0 6px; color:#a9b899;}
+  .page-title{font-size:2rem; color:var(--green-deep); margin:10px 0 8px;}
+
+  .sim-banner{
+    display:flex; align-items:center; gap:10px; background:#fff3cd; color:#7a5c00;
+    border:1px solid #f0d98c; padding:12px 18px; border-radius:14px; font-size:0.85rem; margin-bottom:26px;
+  }
+
+  .pay-layout{display:grid; grid-template-columns:1.4fr 1fr; gap:28px; align-items:start; padding-bottom:80px;}
+
+  /* tab metode */
+  .method-tabs{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:22px;}
+  .tab-btn{
+    display:flex; flex-direction:column; align-items:center; gap:6px; padding:14px 8px;
+    border-radius:14px; border:1.5px solid var(--line); background:var(--white); cursor:pointer;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .tab-btn.active{border-color:var(--green-deep); background:var(--green-soft);}
+  .tab-badge{width:38px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:800; color:var(--white);}
+  .tab-btn span{font-size:0.78rem; font-weight:700; color:var(--green-deep);}
+
+  .method-panel{background:var(--white); border:1px solid var(--line); border-radius:20px; padding:30px;}
+  .method-panel h3{font-size:1.1rem; color:var(--green-deep); margin-bottom:10px;}
+  .method-panel p{color:#5c6852; font-size:0.9rem; margin-bottom:22px; max-width:420px;}
+
+  .qr-box{
+    width:220px; height:220px; margin:0 auto 16px; border-radius:16px; overflow:hidden;
+    border:1.5px solid var(--line); background:var(--white); padding:10px;
+  }
+  .qr-box svg{width:100%; height:100%; display:block;}
+  .qr-caption{text-align:center; font-size:0.78rem; color:#8a9678; margin-bottom:24px;}
+  .amount-display{text-align:center; margin-bottom:24px;}
+  .amount-display span{display:block; font-size:0.85rem; color:#5c6852; margin-bottom:6px;}
+  .amount-display b{font-family:'Fraunces',serif; font-size:1.9rem; color:var(--green-ink);}
+
+  .va-box{
+    background:var(--green-soft); border-radius:14px; padding:18px 22px; text-align:center; margin-bottom:24px;
+  }
+  .va-box span{display:block; font-size:0.8rem; color:var(--green-mid); font-weight:700; margin-bottom:6px;}
+  .va-box b{font-family:'Fraunces',serif; font-size:1.4rem; letter-spacing:1px; color:var(--green-ink);}
+
+  .btn-open-app{
+    display:block; width:100%; text-align:center; background:var(--green-deep); color:var(--cream);
+    padding:14px 0; border-radius:999px; font-weight:800; font-size:0.92rem; cursor:pointer; border:none;
+    margin-bottom:12px;
+  }
+  .btn-sudah-bayar{
+    display:block; width:100%; text-align:center; background:var(--yellow); color:var(--green-ink);
+    padding:15px 0; border-radius:999px; font-weight:800; font-size:0.95rem; cursor:pointer; border:none;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-sudah-bayar:hover{transform:translateY(-2px); box-shadow:var(--shadow);}
+  .btn-batal{display:block; text-align:center; margin-top:14px; font-size:0.85rem; color:#8a9678; font-weight:600;}
+
+  /* ringkasan */
+  .summary-card{background:var(--green-soft); border-radius:20px; padding:24px;}
+  .summary-card h2{font-size:1.15rem; color:var(--green-deep); margin-bottom:18px;}
+  .ringkasan-row{display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(32,48,15,0.1); font-size:0.9rem;}
+  .ringkasan-row:last-child{border-bottom:none;}
+  .ringkasan-row span:first-child{color:#5c6852;}
+  .ringkasan-row span:last-child{color:var(--green-deep); font-weight:700; text-align:right; max-width:60%;}
+  .ringkasan-row.total span:last-child{font-family:'Fraunces',serif; font-size:1.3rem; color:var(--green-ink);}
+
+  /* status sukses */
+  .success-box{text-align:center; padding:40px 20px;}
+  .success-icon{width:70px; height:70px; border-radius:50%; background:#dcefd4; color:#2c6b1f; font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;}
+  .success-box h3{font-size:1.3rem; color:var(--green-deep); margin-bottom:10px;}
+  .success-box p{color:#5c6852; font-size:0.92rem; margin-bottom:24px;}
+
+  footer{background:var(--green-deep); color:#d6e1c6; padding:64px 0 28px;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:36px; margin-bottom:48px;}
+  .foot-brand img{width:56px; height:auto; display:block; margin-bottom:4px;}
+  .foot-brand span{color:var(--cream); font-size:1.2rem;}
+  .foot-brand p{margin-top:14px; font-size:0.88rem; color:#a9bb92; max-width:260px;}
+  .foot-col h4{font-size:0.85rem; color:var(--yellow); margin-bottom:16px; font-weight:700;}
+  .foot-col a{display:block; font-size:0.88rem; color:#c7d5b3; margin-bottom:10px;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.12); padding-top:22px; display:flex; justify-content:space-between; font-size:0.8rem; color:#93a67c; flex-wrap:wrap; gap:10px;}
+
+  @media (max-width:960px){
+    .pay-layout{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 18px;}
+    .method-tabs{grid-template-columns:repeat(2,1fr);}
+    .foot-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <img src="Gambar/Logo.png" alt="Mango Mango's" class="brand-mark" onerror="this.style.display='none'">
+      <span>Mango Mango's</span>
+    </div>
+    <div class="navlinks">
+      <a href="mango-mangos-homepage.html#beranda">Beranda</a>
+      <a href="mango-mangos-homepage.html#katalog">Katalog</a>
+      <a href="mango-mangos-homepage.html#kontak">Kontak</a>
+    </div>
+    <div class="nav-cta">
+      <a class="cart-btn" href="keranjang.html" aria-label="Keranjang">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+      <button class="profile-btn" aria-label="Akun saya">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb">
+    <a href="mango-mangos-homepage.html#beranda">Beranda</a><span class="sep">›</span>
+    <a href="keranjang.html">Keranjang</a><span class="sep">›</span>
+    <a href="checkout.html">Checkout</a><span class="sep">›</span>
+    <span>Pembayaran</span>
+  </div>
+  <h1 class="page-title">Metode Pembayaran</h1>
+
+  <div class="sim-banner">
+    ⚠️ Halaman ini masih simulasi tampilan — belum terhubung ke payment gateway sungguhan.
+  </div>
+
+  <div class="pay-layout">
+    <!-- ============ KIRI: METODE BAYAR ============ -->
+    <div>
+      <div class="method-tabs">
+        <div class="tab-btn" data-m="qris" onclick="pilihTab('qris')">
+          <div class="tab-badge" style="background:#e6335f;">QRIS</div>
+          <span>QRIS</span>
+        </div>
+        <div class="tab-btn" data-m="gopay" onclick="pilihTab('gopay')">
+          <div class="tab-badge" style="background:#00aed6;">G</div>
+          <span>GoPay</span>
+        </div>
+        <div class="tab-btn" data-m="dana" onclick="pilihTab('dana')">
+          <div class="tab-badge" style="background:#118eea;">DANA</div>
+          <span>DANA</span>
+        </div>
+        <div class="tab-btn" data-m="bri" onclick="pilihTab('bri')">
+          <div class="tab-badge" style="background:#00529c;">BRI</div>
+          <span>Bank BRI</span>
+        </div>
+      </div>
+
+      <div class="method-panel" id="methodPanel"></div>
+    </div>
+
+    <!-- ============ KANAN: RINGKASAN PESANAN ============ -->
+    <div>
+      <div class="summary-card">
+        <h2>Ringkasan Pesanan</h2>
+        <div class="ringkasan-row"><span>Order</span><span id="rOrder">-</span></div>
+        <div class="ringkasan-row"><span>Nama</span><span id="rNama">-</span></div>
+        <div class="ringkasan-row"><span>Nomor</span><span id="rNomor">-</span></div>
+        <div class="ringkasan-row"><span>Metode</span><span id="rMetode">-</span></div>
+        <div class="ringkasan-row total"><span>Total</span><span id="rTotal">Rp 0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="Gambar/Logo.png" alt="Mango Mango's" class="foot-brand-img" onerror="this.style.display='none'">
+        <p>Bisnis minuman &amp; dessert berbahan buah segar, dirintis sejak 2017 oleh Muhammad Sofian.</p>
+      </div>
+      <div class="foot-col"><h4>Menu</h4><a href="mango-mangos-homepage.html#beranda">Beranda</a><a href="mango-mangos-homepage.html#katalog">Katalog</a><a href="mango-mangos-homepage.html#kontak">Kontak</a></div>
+      <div class="foot-col"><h4>Bantuan</h4><a href="#">Cara Pesan</a><a href="#">Metode Pembayaran</a><a href="#">FAQ</a></div>
+      <div class="foot-col"><h4>Terhubung</h4><a href="https://instagram.com/mangomangos_official" target="_blank">Instagram</a><a href="https://wa.me/6281310524199" target="_blank">WhatsApp</a><a href="https://www.facebook.com/share/1EhAWi1Vbh/?mibextid=wwXIfr" target="_blank">Facebook</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Mango Mango's. Dibuat oleh Group 7 — Universitas Negeri Makassar.</span>
+      <span>Makassar, Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script src="produk.js"></script>
+<script>
+  const data = JSON.parse(sessionStorage.getItem('mangoCheckoutData') || 'null');
+
+  if (!data || !data.items || data.items.length === 0) {
+    // Tidak ada data checkout — kemungkinan dibuka langsung tanpa lewat checkout.html
+    document.querySelector('.pay-layout').innerHTML = `
+      <div class="method-panel" style="grid-column:1/-1; text-align:center;">
+        <h3>Belum ada pesanan untuk dibayar</h3>
+        <p>Silakan lengkapi data pengiriman di halaman checkout terlebih dahulu.</p>
+        <a class="btn-open-app" href="checkout.html" style="display:inline-block; text-decoration:none;">Kembali ke Checkout</a>
+      </div>`;
+  } else {
+    isiRingkasan(data);
+    pilihTab(data.metodePembayaran || 'qris');
+  }
+
+  document.addEventListener('DOMContentLoaded', updateCartBadge);
+
+  function isiRingkasan(d) {
+    document.getElementById('rOrder').textContent = d.orderId;
+    document.getElementById('rNama').textContent = d.customer.nama;
+    document.getElementById('rNomor').textContent = d.customer.wa;
+    document.getElementById('rTotal').textContent = formatRp(d.total);
+  }
+
+  const namaMetode = { qris: 'QRIS', gopay: 'GoPay', dana: 'DANA', bri: 'Transfer BRI (VA)' };
+
+  function pilihTab(kode) {
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.toggle('active', t.dataset.m === kode));
+    document.getElementById('rMetode').textContent = namaMetode[kode];
+    renderPanel(kode);
+  }
+
+  function renderPanel(kode) {
+    const panel = document.getElementById('methodPanel');
+    const total = data ? formatRp(data.total) : 'Rp 0';
+
+    if (kode === 'qris') {
+      panel.innerHTML = `
+        <h3>Bayar dengan QRIS</h3>
+        <p>Buka aplikasi mobile banking atau e-wallet apa pun yang mendukung QRIS, lalu scan kode di bawah.</p>
+        <div class="qr-box">${qrPlaceholderSVG()}</div>
+        <p class="qr-caption">Ganti area QR di atas dengan QRIS merchant asli milik toko kamu.</p>
+        <div class="amount-display"><span>Total yang harus dibayar</span><b>${total}</b></div>
+        <button class="btn-sudah-bayar" onclick="konfirmasiBayar()">✅ Saya Sudah Membayar</button>
+        <a class="btn-batal" href="checkout.html">← Kembali ke Checkout</a>
+      `;
+    } else if (kode === 'gopay' || kode === 'dana') {
+      const nama = kode === 'gopay' ? 'GoPay' : 'DANA';
+      panel.innerHTML = `
+        <h3>Bayar dengan ${nama}</h3>
+        <p>Klik tombol di bawah untuk membuka aplikasi ${nama} dan menyelesaikan pembayaran secara otomatis.</p>
+        <div class="amount-display"><span>Total yang harus dibayar</span><b>${total}</b></div>
+        <button class="btn-open-app" onclick="alert('(Simulasi) Ini akan membuka aplikasi ${nama} kalau sudah terhubung payment gateway.')">Buka Aplikasi ${nama}</button>
+        <button class="btn-sudah-bayar" onclick="konfirmasiBayar()">✅ Saya Sudah Membayar</button>
+        <a class="btn-batal" href="checkout.html">← Kembali ke Checkout</a>
+      `;
+    } else if (kode === 'bri') {
+      panel.innerHTML = `
+        <h3>Transfer Virtual Account BRI</h3>
+        <p>Transfer melalui BRImo, ATM BRI, atau m-Banking BRI ke nomor Virtual Account berikut.</p>
+        <div class="va-box"><span>Nomor Virtual Account</span><b>8808 xxxx xxxx (contoh)</b></div>
+        <div class="amount-display"><span>Total yang harus dibayar</span><b>${total}</b></div>
+        <button class="btn-sudah-bayar" onclick="konfirmasiBayar()">✅ Saya Sudah Membayar</button>
+        <a class="btn-batal" href="checkout.html">← Kembali ke Checkout</a>
+      `;
+    }
+  }
+
+  // Kotak simulasi QRIS (dekorasi saja, gaya barcode + label "QRIS TOKO")
+  // Ganti dengan <img src="qris-asli-toko.png"> nanti kalau sudah ada QRIS resmi.
+  function qrPlaceholderSVG() {
+    let bars = '';
+    let x = 20;
+    while (x < 180) {
+      const w = [3, 5, 8][Math.floor(Math.random() * 3)];
+      if (Math.random() > 0.4) {
+        bars += `<rect x="${x}" y="20" width="${w}" height="110" fill="#20300f"/>`;
+      }
+      x += w + 3;
+    }
+    return `<svg viewBox="0 0 200 200">
+      <rect width="200" height="200" fill="#ffffff"/>
+      ${bars}
+      <text x="100" y="155" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="15" font-weight="800" fill="#20300f">QRIS TOKO</text>
+    </svg>`;
+  }
+
+  // ====== KONFIRMASI SUDAH BAYAR (manual, belum ada payment gateway) ======
+  function konfirmasiBayar() {
+    document.querySelector('.pay-layout').innerHTML = `
+      <div class="success-box" style="grid-column:1/-1;">
+        <div class="success-icon">✓</div>
+        <h3>Terima kasih, ${data ? data.customer.nama : 'Pelanggan'}!</h3>
+        <p>Konfirmasi pembayaranmu untuk order <b>${data ? data.orderId : ''}</b> sudah kami catat.
+           Admin Mango Mango's akan memeriksa dan memproses pesananmu secepatnya.</p>
+        <a class="btn-open-app" style="max-width:280px; margin:0 auto 12px; text-decoration:none;" href="mango-mangos-homepage.html#beranda">Kembali ke Beranda</a>
+      </div>`;
+    sessionStorage.removeItem('mangoCheckoutData');
+    // Kosongkan item yang tadi dicentang dari keranjang
+    const cart = getCart().filter(i => !i.checked);
+    saveCart(cart);
+  }
+</script>
+
+</body>
+</html>
