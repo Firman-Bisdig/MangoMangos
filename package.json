@@ -1,0 +1,9 @@
+{
+  "name": "mango-mangos",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm --prefix client run build",
+    "dev": "npm --prefix client run dev"
+  }
+}
