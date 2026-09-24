@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { ArrowLeft, AlertCircle, QrCode, Banknote, ShoppingBag } from 'lucide-react';
 import { useCart, formatRupiah } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { createOrderApi } from '../api';
@@ -22,13 +22,34 @@ const CheckoutPage = () => {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    if (cart.length === 0 && !orderCompleted) {
-      navigate('/keranjang');
-    }
-  }, [cart.length, orderCompleted, navigate]);
+  }, []);
 
   if (cart.length === 0 && !orderCompleted) {
-    return null;
+    return (
+      <div className="container" style={{ padding: '80px 20px', textAlign: 'center' }}>
+        <div style={{
+          width: '80px',
+          height: '80px',
+          borderRadius: '50%',
+          backgroundColor: 'var(--cream-mid)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 auto 20px',
+        }}>
+          <ShoppingBag size={40} color="var(--green-mid)" />
+        </div>
+        <h2 style={{ fontSize: '1.8rem', color: 'var(--green-deep)', marginBottom: '8px' }}>
+          Keranjang Belanja Masih Kosong
+        </h2>
+        <p style={{ color: '#5C6852', marginBottom: '24px' }}>
+          Silakan pilih menu smoothies atau paket hemat favoritmu sebelum melakukan checkout.
+        </p>
+        <Link to="/" className="btn-primary" style={{ display: 'inline-flex', padding: '12px 28px', textDecoration: 'none' }}>
+          Lihat Menu Segar
+        </Link>
+      </div>
+    );
   }
 
   const handleSubmitOrder = async (e) => {
