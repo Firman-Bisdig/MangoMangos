@@ -42,7 +42,9 @@ const HomePage = () => {
     const fetchProducts = async () => {
       try {
         const res = await getProductsApi();
-        setProducts(res.data.products);
+        if (res.data && Array.isArray(res.data.products)) {
+          setProducts(res.data.products);
+        }
       } catch (err) {
         console.error('Failed to load products:', err);
       }
@@ -72,9 +74,7 @@ const HomePage = () => {
     }
   };
 
-
-
-  const catalogProducts = products.filter((p) => p.type !== 'bundle');
+  const catalogProducts = (Array.isArray(products) ? products : []).filter((p) => p && p.type !== 'bundle');
 
   return (
     <div>

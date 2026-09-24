@@ -85,14 +85,16 @@ const ProdukDetailPage = () => {
           getProductsApi().catch(() => ({ data: { products: [] } })),
         ]);
 
-        const prod = prodRes.data.product;
-        setProduct(prod);
-        setSelectedImg(prod.img || '/Gambar/Mangga.jpeg');
+        const prod = prodRes.data?.product;
+        if (prod) {
+          setProduct(prod);
+          setSelectedImg(prod.img || '/Gambar/Mangga.jpeg');
 
-        if (prod.type === 'sized' && prod.sizes?.length > 0) {
-          setSelectedSize(prod.sizes[0]);
-        } else {
-          setSelectedSize(null);
+          if (prod.type === 'sized' && prod.sizes?.length > 0) {
+            setSelectedSize(prod.sizes[0]);
+          } else {
+            setSelectedSize(null);
+          }
         }
 
         if (allRes.data?.products) {
